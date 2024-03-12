@@ -37,6 +37,12 @@ describe('POST /editoras', () => {
 
     idResposta = reposta.body.content.id;
   });
+  it('Deve não adicionar nada ao passar o body vazio', async () => {
+    await request(app)
+      .post('/editoras')
+      .send({})
+      .expect(400);
+  });
 });
 
 describe('GET /editoras/id', () => {
@@ -44,6 +50,15 @@ describe('GET /editoras/id', () => {
     await request(app)
       .get(`/editoras/${idResposta}`)
       .expect(200);
+  });
+});
+
+describe('PUT /editoras/id', () => {
+  it('Deve alterar o campo nome', async () => {
+    await request(app)
+      .put(`/editoras/${idResposta}`)
+      .send({ nome: 'Raí da Silva' })
+      .expect(204);
   });
 });
 
